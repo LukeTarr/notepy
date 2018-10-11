@@ -7,13 +7,13 @@ from tkinter.filedialog import *
 filename = None
 
 #Functions for handling creation/opening of files
-def newFile():
+def new_file():
     global filename
     filename = "Untitled"
 
     text.delete(0.0, END)
 
-def saveFile():
+def save_file():
     global filename
     
     fullText = text.get(0.0, END)
@@ -25,7 +25,7 @@ def saveFile():
     except:
         showerror(title="Error", message="Unable to use saveFile")
 
-def saveAs():
+def save_as():
     fileTo = asksaveasfile(mode='w')
     fullText = text.get(0.0, END)
 
@@ -34,10 +34,13 @@ def saveAs():
     except:
         showerror(title="Error", message="Unable to use saveAs")
 
-def openFile():
+def open_file():
+    global filename
+
     filepath = askopenfile(mode='r')
     data = filepath.read()
-
+    filename = filepath.name
+    
     text.delete(0.0, END)
     text.insert(0.0, data)
 
@@ -54,10 +57,10 @@ text.pack()
 menubar = Menu(root)
 filemenu = Menu(menubar)
 
-filemenu.add_command(label="New", command=newFile)
-filemenu.add_command(label="Open", command=openFile)
-filemenu.add_command(label="Save", command=saveFile)
-filemenu.add_command(label="Save As", command=saveAs)
+filemenu.add_command(label="New", command=new_file)
+filemenu.add_command(label="Open", command=open_file)
+filemenu.add_command(label="Save", command=save_file)
+filemenu.add_command(label="Save As", command=save_as)
 
 filemenu.add_separator()
 
